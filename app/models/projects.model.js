@@ -92,7 +92,7 @@ Project.create = (newProject, result) => {
  */
 Project.deleteAll = result => {
   //Fix SQL STATEMENT
-  db.query("DELETE from projects *", (err, res) => {
+  db.query("DELETE from projects where 1", (err, res) => {
     if(err){
       console.log("Error: ", err);
       result(err, null);
