@@ -1,19 +1,55 @@
 const Project = require("../models/projects.model");
 
+/**
+ * Handles the logic for selecting a project by ID from the database.
+ * @param {*} req 
+ * @param {*} res 
+ */
+
 exports.findByID = (req, res) => {
+    //If there is no ID specified,
     if(!req.query.id){
         res.status(400).send({
-            message: "ID must be specified"
+            message:
+                "A project ID must be specified :0"
         })
     }
-    Project.getByID(req.query.id, (err, data) =>{
-        if(err)
-            res.status(500).send({
-                message: 
-                    err.message || "Some error occurred while trying to get the project by ID."
-            });
-        else res.send(data);
-    });
+    else{
+        Project.getByID(req.query.id, (err, data) =>{
+            if(err){
+                res.status(500).send({
+                    message: 
+                        err.message || "Some error occurred while trying to get the project by ID."
+                });
+            }
+            else res.send(data);
+        });
+    }
+};
+
+/**
+ * Handles the logic for selecting a project by name from the database.
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.findByName = (req, res) => {
+    if(!req.query.name){
+        res.status(400).send({
+            message:
+                "A project name must be specified!"
+        });
+    }
+    else{
+        Project.getByProjectName(req.query.name, (err, data) =>{
+            if(err){
+                res.status(500).send({
+                    message:
+                        err.message || "Some error occurred while trying to get the project by Name."
+                })
+            }
+            else res.send(data);
+        });
+    }
 };
 
 /**
@@ -64,6 +100,17 @@ exports.create = (req, res) => {
                 message: 
                 err.message || "Some error occurred while creating the project."
             });
+        else res.send(data);
+    });
+};
+
+exports.deleteAllProjects = (req, res) => {
+    Project.deleteAll((err, data) => {
+    if(err)
+        res.status(500).send({
+            message:
+                err.message || "Some error occurred while trying to delete all projects."
+        });
         else res.send(data);
     });
 };

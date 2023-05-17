@@ -29,7 +29,7 @@ Project.getAll = result => {
 
 /**
  * Get projects by ID
- * @param {} result 
+ * @param {*} result 
  */
 Project.getByID = (id, result) => {
   db.query("SELECT * from projects where id = ?", id, (err, res) =>{
@@ -42,16 +42,24 @@ Project.getByID = (id, result) => {
       console.log("Projects: ", res)
       result(null, res)
   });
-
-}
+};
 
 /**
  * Get projects by project name
  * @param {*} result 
  */
-Project.getByProjectName = result => {
-
-}
+Project.getByProjectName = (name, result) => {
+  db.query("SELECT * from projects where projectname = ?", name, (err, res) =>{
+    if(err){
+      console.log("Error: ", err);
+      result(null, err);
+      return;
+    }
+    else
+      console.log("Projects: ", res);
+      result(null, res);
+  });
+};
 
 /**
  * Update projects by project ID
@@ -59,7 +67,7 @@ Project.getByProjectName = result => {
  */
 Project.updateProject = (id) => {
 
-}
+};
 
 /**
  * Create new projects
@@ -83,8 +91,17 @@ Project.create = (newProject, result) => {
  * @param {} id 
  */
 Project.deleteAll = result => {
-
-}
+  //Fix SQL STATEMENT
+  db.query("DELETE from projects *", (err, res) => {
+    if(err){
+      console.log("Error: ", err);
+      result(err, null);
+      return;
+    }
+    console.log("Projects: ", res);
+    result(null, res);
+  });
+};
 
 /**
  * Delete projects by project ID
@@ -92,5 +109,5 @@ Project.deleteAll = result => {
  */
 Project.deleteByID = (id) => {
 
-}
+};
 module.exports = Project;
