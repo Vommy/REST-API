@@ -1,9 +1,9 @@
 module.exports = app => {
   const projects = require("../controllers/projects.controller");
 
-  projects.get("/aa", projects.findAll);
+  app.get("/projects", projects.findAll);
 
-  projects.post("/aa", projects.create);
+  app.post("/newproject", projects.create);
 
   // TODO: complete the code as per the instructions given in Assignment 4
 }
