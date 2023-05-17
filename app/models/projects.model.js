@@ -11,6 +11,10 @@ const Project = function(Project) {
   this.enddate = Project.enddate;
 };
 
+/**
+ * Get all projects
+ * @param {*} result 
+ */
 Project.getAll = result => { 
   db.query("SELECT * from projects", (err, res) => {
     if(err){
@@ -23,6 +27,35 @@ Project.getAll = result => {
   });
 };
 
+/**
+ * Get projects by ID
+ * @param {} result 
+ */
+Project.getByID = result => {
+
+}
+
+/**
+ * Get projects by project name
+ * @param {*} result 
+ */
+Project.getByProjectName = result => {
+
+}
+
+/**
+ * Update projects by project ID
+ * @param {*} id 
+ */
+Project.updateProject = (id) => {
+
+}
+
+/**
+ * Create new projects
+ * @param {*} newProject 
+ * @param {*} result 
+ */
 Project.create = (newProject, result) => {
   db.query("INSERT into projects SET ?", newProject, (err, res) => {
     if(err){
@@ -35,4 +68,19 @@ Project.create = (newProject, result) => {
   });
 };
 
+/**
+ * Delete all projects from the database
+ * @param {} id 
+ */
+Project.deleteAll = result => {
+
+}
+
+/**
+ * Delete projects by project ID
+ * @param {*} id 
+ */
+Project.deleteByID = (id) => {
+
+}
 module.exports = Project;

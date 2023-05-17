@@ -1,5 +1,10 @@
 const Project = require("../models/projects.model");
 
+/**
+ * Handles the logic for returning all of the projects from the database.
+ * @param {*} req 
+ * @param {*} res 
+ */
 exports.findAll = (req, res) => {
     Project.getAll((err, data) => {
         if(err)
@@ -11,13 +16,24 @@ exports.findAll = (req, res) => {
     });
 };
 
+
+/**
+ * Handles the logic for creating a new project.
+ * Creates a new project using the data in the request body.
+ * Then calls the projects.model.create(function).
+ * Sends appropriate status to the user.
+ * @param {*} req The request object used to receive data from the client.
+ * @param {*} res The response object used for sending data back to the client.
+ */
 exports.create = (req, res) => {
+    //Check that the request is valid (There is data to create the project)
     if(!req.body){
         res.status(400).send({
             message: "Content cannot be empty!"
         });
     }
 
+    //Create the new project object to pass into projects.model.create()
     const project = new Project({
         id: req.body.id,
         projectname: req.body.projectname,
@@ -26,6 +42,7 @@ exports.create = (req, res) => {
         enddate: req.body.enddate
     });
 
+    //Create the project using projects.model.create().
     Project.create(project, (err, data) => {
         if(err)
             res.status(500).send({
