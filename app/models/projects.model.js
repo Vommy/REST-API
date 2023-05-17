@@ -65,8 +65,7 @@ Project.getByProjectName = (name, result) => {
  * Update projects by project ID
  * @param {*} id 
  */
-Project.updateProject = (id) => {
-
+Project.updateProject = (id, result) => {
 };
 
 /**
@@ -107,7 +106,19 @@ Project.deleteAll = result => {
  * Delete projects by project ID
  * @param {*} id 
  */
-Project.deleteByID = (id) => {
-
+Project.deleteByID = (id, result) => {
+  db.query("DELETE from projects where id = ?", id, (err, res) => {
+    if(err){
+      console.log("Error: ", err);
+      result(err, null);
+      return;
+    }
+    else{
+      //Can possibly change what the console logs in terms of the project
+      console.log("Project deleted:", res);
+      result(null, res);
+    }
+  });
 };
+
 module.exports = Project;

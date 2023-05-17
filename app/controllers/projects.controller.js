@@ -5,7 +5,6 @@ const Project = require("../models/projects.model");
  * @param {*} req 
  * @param {*} res 
  */
-
 exports.findByID = (req, res) => {
     //If there is no ID specified,
     if(!req.query.id){
@@ -104,6 +103,11 @@ exports.create = (req, res) => {
     });
 };
 
+/**
+ * Handles the logic for deleting all of the projects from the database.
+ * @param {*} req 
+ * @param {*} res 
+ */
 exports.deleteAllProjects = (req, res) => {
     Project.deleteAll((err, data) => {
     if(err)
@@ -114,5 +118,31 @@ exports.deleteAllProjects = (req, res) => {
         else res.send(data);
     });
 };
+
+/**
+ * Handles the logic for deleting the project with the specified id from the database.
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.deleteProjectByID = (req, res) => {
+    if(!req.query.id){
+        res.status(400).send({
+            message:
+                "A project id must be specified!"
+        });
+    }
+    else{
+        Project.deleteByID(req.query.id, (err, data) =>{
+            if(err){
+                res.status(500).send({
+                    message:
+                        err.message || "Some error occurred while trying to delete the project with ID: " + req.query.id
+                })
+            }
+            else res.send(data);
+        });
+    }
+}
+
  
 // TODO: complete the code as per the instructions given in Assignment 3

@@ -3,7 +3,7 @@ module.exports = app => {
 
   app.get("/projects-by-name", projects.findByName);
 
-  app.get("/projects-by-ID", projects.findByID);
+  app.get("/projects-by-id", projects.findByID);
 
   app.get("/projects", projects.findAll);
 
@@ -11,6 +11,7 @@ module.exports = app => {
 
   app.delete("/projects", projects.deleteAllProjects)
 
+  app.delete("/projects-by-id", projects.deleteProjectByID)
 
 
   // TODO: complete the code as per the instructions given in Assignment 4
