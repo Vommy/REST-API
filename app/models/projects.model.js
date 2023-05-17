@@ -31,7 +31,17 @@ Project.getAll = result => {
  * Get projects by ID
  * @param {} result 
  */
-Project.getByID = result => {
+Project.getByID = (id, result) => {
+  db.query("SELECT * from projects where id = ?", id, (err, res) =>{
+    if(err){
+      console.log("Error: ", err)
+      result(null, err);
+      return;
+    }
+    else
+      console.log("Projects: ", res)
+      result(null, res)
+  });
 
 }
 

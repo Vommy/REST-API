@@ -1,5 +1,21 @@
 const Project = require("../models/projects.model");
 
+exports.findByID = (req, res) => {
+    if(!req.query.id){
+        res.status(400).send({
+            message: "ID must be specified"
+        })
+    }
+    Project.getByID(req.query.id, (err, data) =>{
+        if(err)
+            res.status(500).send({
+                message: 
+                    err.message || "Some error occurred while trying to get the project by ID."
+            });
+        else res.send(data);
+    });
+};
+
 /**
  * Handles the logic for returning all of the projects from the database.
  * @param {*} req 
@@ -15,7 +31,6 @@ exports.findAll = (req, res) => {
         else res.send(data);
     });
 };
-
 
 /**
  * Handles the logic for creating a new project.
