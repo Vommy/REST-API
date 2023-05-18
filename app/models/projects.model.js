@@ -2,7 +2,6 @@ const db = require("./db");
 
 // TODO: complete the code as per the instructions given in Assignment 3
 
-
 const Project = function(Project) {
   this.id = Project.id;
   this.projectname = Project.projectname;
@@ -12,7 +11,8 @@ const Project = function(Project) {
 };
 
 /**
- * Gets all projects
+ * @author Veren Villegas 1574646
+ * @description Gets all projects from the database.
  * @param {*} result The result of the query.
  */
 Project.getAll = result => { 
@@ -28,7 +28,8 @@ Project.getAll = result => {
 };
 
 /**
- * Gets projects by ID.
+ * @author Veren Villegas 1574646
+ * @description Gets projects by ID from the database.
  * @param {*} result The result of the query.
  */
 Project.getByID = (id, result) => {
@@ -45,7 +46,8 @@ Project.getByID = (id, result) => {
 };
 
 /**
- * Gets projects by project name.
+ * @author Veren Villegas 1574646
+ * @description Gets projects by project name from the database.
  * @param {*} result The result of the query.
  */
 Project.getByProjectName = (name, result) => {
@@ -62,8 +64,14 @@ Project.getByProjectName = (name, result) => {
 };
 
 /**
- * Update projects by project ID.
- * @param {*} id 
+ * @author Veren Villegas 1574646
+ * @description Update projects by project ID.
+ * @readonly Tried implementing some data integrity checks, like if a user omitted a property from their request (maybe they only wanted to update the startdate).
+ * I achieved this by updating a query string, though there are probably much better ways to do this.
+ * I also check that values aren't null and making sure to use parameterized queries. 
+ * Could possibly refactor to check if the keys provided are in the database.
+ * Database could also implement data integrity checks since user can put different values where they shouldn't be (like words in the date).
+ * @param {*} id The ID of the project
  */
 Project.updateProject = (updateInfo, result) => {
   if(updateInfo.id == null) return;
@@ -73,7 +81,6 @@ Project.updateProject = (updateInfo, result) => {
   goodValues = [];
   for(let i = 0; i < updateValues.length; i++) {
     if(updateParams[i] == "id"){
-
       continue;
     }
     if(updateValues[i] != null){
@@ -96,7 +103,8 @@ Project.updateProject = (updateInfo, result) => {
 };
 
 /**
- * Create new projects
+ * @author Veren Villegas 1574646
+ * @description Creates new projects and inserts them into the database.
  * @param {*} newProject The new project to insert into the database.
  * @param {*} result The result of the query.
  */
@@ -113,7 +121,8 @@ Project.create = (newProject, result) => {
 };
 
 /**
- * Deletes all projects from the database.
+ * @author Veren Villegas 1574646
+ * @description Deletes all projects from the database.
  */
 Project.deleteAll = result => {
   //Fix SQL STATEMENT
@@ -129,7 +138,8 @@ Project.deleteAll = result => {
 };
 
 /**
- * Deletes projects by project ID.
+ * @author Veren Villegas 1574646
+ * @description Deletes projects by project ID.
  * @param {*} id The id of the project to delete.
  */
 Project.deleteByID = (id, result) => {
