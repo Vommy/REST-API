@@ -13,6 +13,8 @@ module.exports = app => {
 
   app.delete("/projects-by-id", projects.deleteProjectByID)
 
+  app.put("/projects-update", projects.update)
+
 
   // TODO: complete the code as per the instructions given in Assignment 4
 }

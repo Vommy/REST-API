@@ -65,7 +65,17 @@ Project.getByProjectName = (name, result) => {
  * Update projects by project ID
  * @param {*} id 
  */
-Project.updateProject = (id, result) => {
+Project.updateProject = (updateInfo, result) => {
+  db.query("UPDATE projects SET projectname = ?, projectdesc = ?, startdate = ?, enddate = ? WHERE id = ?", 
+  [updateInfo.projectname, updateInfo.projectdesc, updateInfo.startdate, updateInfo.enddate, updateInfo.id], (err, res) => {
+    if(err){
+      console.log("Error: ", err);
+      result(err, null);
+      return;
+    }
+    console.log("Updated project: ", res);
+    result(null, res);
+  });
 };
 
 /**

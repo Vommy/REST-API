@@ -104,6 +104,36 @@ exports.create = (req, res) => {
 };
 
 /**
+ * Handles the logic for updating a project based on the project's ID.
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.update = (req, res) => {
+    if(!req.body){
+        res.status(400).send({
+            message: "Content cannot be empty!"
+        });
+    }
+
+    const update = new Project({
+        id: req.body.id,
+        projectname: req.body.projectname,
+        projectdesc: req.body.projectdesc,
+        startdate:  req.body.startdate,
+        enddate: req.body.enddate
+    });
+
+    Project.updateProject(update, (err, data) => {
+        if(err)
+            res.status(500).send({
+                message: 
+                err.message || "Some error occurred while creating the project."
+            });
+        else res.send(data);
+    });
+};
+
+/**
  * Handles the logic for deleting all of the projects from the database.
  * @param {*} req 
  * @param {*} res 
