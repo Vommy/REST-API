@@ -12,8 +12,8 @@ const Project = function(Project) {
 };
 
 /**
- * Get all projects
- * @param {*} result 
+ * Gets all projects
+ * @param {*} result The result of the query.
  */
 Project.getAll = result => { 
   db.query("SELECT * from projects", (err, res) => {
@@ -28,8 +28,8 @@ Project.getAll = result => {
 };
 
 /**
- * Get projects by ID
- * @param {*} result 
+ * Gets projects by ID.
+ * @param {*} result The result of the query.
  */
 Project.getByID = (id, result) => {
   db.query("SELECT * from projects where id = ?", id, (err, res) =>{
@@ -45,8 +45,8 @@ Project.getByID = (id, result) => {
 };
 
 /**
- * Get projects by project name
- * @param {*} result 
+ * Gets projects by project name.
+ * @param {*} result The result of the query.
  */
 Project.getByProjectName = (name, result) => {
   db.query("SELECT * from projects where projectname = ?", name, (err, res) =>{
@@ -62,12 +62,29 @@ Project.getByProjectName = (name, result) => {
 };
 
 /**
- * Update projects by project ID
+ * Update projects by project ID.
  * @param {*} id 
  */
 Project.updateProject = (updateInfo, result) => {
-  db.query("UPDATE projects SET projectname = ?, projectdesc = ?, startdate = ?, enddate = ? WHERE id = ?", 
-  [updateInfo.projectname, updateInfo.projectdesc, updateInfo.startdate, updateInfo.enddate, updateInfo.id], (err, res) => {
+  if(updateInfo.id == null) return;
+  updateQuery = "UPDATE projects SET ";
+  updateParams = Object.keys(updateInfo);
+  updateValues = Object.values(updateInfo);
+  goodValues = [];
+  for(let i = 0; i < updateValues.length; i++) {
+    if(updateParams[i] == "id"){
+
+      continue;
+    }
+    if(updateValues[i] != null){
+      updateQuery += updateParams[i] + " = ?,";
+      goodValues.push(updateValues[i]);
+    }
+  };
+  updateQuery = updateQuery.slice(0, updateQuery.length - 1);
+  updateQuery += " WHERE id = ?";
+  goodValues.push(updateInfo.id);
+  db.query(updateQuery, goodValues, (err, res) => {
     if(err){
       console.log("Error: ", err);
       result(err, null);
@@ -80,8 +97,8 @@ Project.updateProject = (updateInfo, result) => {
 
 /**
  * Create new projects
- * @param {*} newProject 
- * @param {*} result 
+ * @param {*} newProject The new project to insert into the database.
+ * @param {*} result The result of the query.
  */
 Project.create = (newProject, result) => {
   db.query("INSERT into projects SET ?", newProject, (err, res) => {
@@ -96,8 +113,7 @@ Project.create = (newProject, result) => {
 };
 
 /**
- * Delete all projects from the database
- * @param {} id 
+ * Deletes all projects from the database.
  */
 Project.deleteAll = result => {
   //Fix SQL STATEMENT
@@ -107,14 +123,14 @@ Project.deleteAll = result => {
       result(err, null);
       return;
     }
-    console.log("Projects: ", res);
+    console.log("All projects deleted: ", res);
     result(null, res);
   });
 };
 
 /**
- * Delete projects by project ID
- * @param {*} id 
+ * Deletes projects by project ID.
+ * @param {*} id The id of the project to delete.
  */
 Project.deleteByID = (id, result) => {
   db.query("DELETE from projects where id = ?", id, (err, res) => {

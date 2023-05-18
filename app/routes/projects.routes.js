@@ -15,6 +15,7 @@ module.exports = app => {
 
   app.put("/projects-update", projects.update)
 
+  //INCLUDE POSTMAN ROUTES TESTING
 
   // TODO: complete the code as per the instructions given in Assignment 4
 }

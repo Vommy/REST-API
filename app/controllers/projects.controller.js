@@ -115,6 +115,8 @@ exports.update = (req, res) => {
         });
     }
 
+    //Can modify so that fields can be ommitted by the user.
+    /*
     const update = new Project({
         id: req.body.id,
         projectname: req.body.projectname,
@@ -122,8 +124,8 @@ exports.update = (req, res) => {
         startdate:  req.body.startdate,
         enddate: req.body.enddate
     });
-
-    Project.updateProject(update, (err, data) => {
+    */
+    Project.updateProject(req.body, (err, data) => {
         if(err)
             res.status(500).send({
                 message: 
